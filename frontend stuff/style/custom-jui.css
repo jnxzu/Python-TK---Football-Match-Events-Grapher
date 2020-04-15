@@ -1,0 +1,61 @@
+.ui-widget.ui-widget-content {
+  -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.5);
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.ui-corner-all {
+  border-radius: 4px;
+}
+
+.ui-slider-horizontal {
+  height: 0.8em;
+}
+
+.ui-slider {
+  position: relative;
+}
+
+.ui-slider-horizontal .ui-slider-range {
+  top: 0;
+  height: 100%;
+}
+
+.ui-slider .ui-slider-range {
+  position: absolute;
+  z-index: 1;
+  font-size: 0.7em;
+  display: block;
+  border: 0;
+  background-position: 0 0;
+}
+
+.ui-widget-header {
+  border: 1px solid #707070;
+  background: #7aff7a 50% 50% repeat-x;
+  color: #222222;
+  font-weight: bold;
+}
+
+.ui-slider .ui-slider-handle {
+  position: absolute;
+  z-index: 2;
+  width: 1.2em;
+  height: 1.2em;
+  cursor: default;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default {
+  border: 1px solid #c5c5c5;
+  background: #f6f6f6;
+  font-weight: normal;
+  color: #454545;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+  top: -0.3em;
+  margin-left: -0.6em;
+}
+/*# sourceMappingURL=custom-jui.css.map */

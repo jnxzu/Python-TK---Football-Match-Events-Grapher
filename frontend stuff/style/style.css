@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #7aff7a;
+  overflow: hidden;
+}
+
+#pitch-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  width: 74%;
+  height: 100vh;
+  overflow: clip;
+  -webkit-box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+
+#pitch-container #pitch-container-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#pitch-container #pitch-container-top #context-h h1 {
+  font-weight: 600;
+}
+
+#pitch-container #pitch-container-top #context-h h2 {
+  font-weight: 400;
+}
+
+#pitch-container #pitch-container-top #context-h h4 {
+  font-style: italic;
+  font-weight: 300;
+}
+
+#pitch-container #pitch-container-top #context-h h1,
+#pitch-container #pitch-container-top #context-h h2,
+#pitch-container #pitch-container-top #context-h h4 {
+  margin: 1vh;
+}
+
+#pitch-container #pitch-container-top #time-bar-container {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#pitch-container #pitch-container-top #time-bar-container p {
+  text-align: center;
+}
+
+#pitch-container #pitch-container-top #time-bar-container p label {
+  font-size: smaller;
+  font-weight: 500;
+}
+
+#pitch-container #pitch-container-top #time-bar-container p input {
+  text-align: center;
+  font-weight: 700;
+  font-size: larger;
+  border: 0;
+}
+
+#pitch-container #pitch-container-top #time-bar-container #time-bar {
+  width: 80%;
+}
+
+#pitch-container #pitch {
+  height: 70%;
+  margin: 5vh auto;
+  -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.5);
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+#pitch-container #settings-btn {
+  position: absolute;
+  bottom: 0;
+  cursor: pointer;
+}
+
+#pitch-container #settings-btn img {
+  width: 50px;
+  height: 50px;
+}
+
+#panel-container {
+  color: #707070;
+  position: absolute;
+  left: 74%;
+  top: 0;
+  width: 26%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#panel-container #panel {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  padding-right: 17px;
+}
+/*# sourceMappingURL=style.css.map */
