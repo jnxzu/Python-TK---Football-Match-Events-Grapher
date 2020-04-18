@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "style/style.css" %}">
+    <link rel="stylesheet" href="{% static "style/custom-jui.css" %}">
+    <title>Footballysis</title>
+</head>
+
+<body>
+    <div id="pitch-container">
+        <div id="pitch-container-top">
+            <div id="context-h">
+                <h1>{{home_team}} - {{away_team}}</h1>
+                <h2>{{home_score}} - {{away_score}}</h2>
+                <h4>{{match_date|date:"d/m/Y"}}</h4>
+            </div>
+            <div id="time-bar-container">
+                <p>
+                    <label for="amount">TIME RANGE:<br></label>
+                    <input type="text" id="amount" readonly>
+                </p>
+                <div id="time-bar"></div>
+            </div>
+        </div>
+        <div id="pitch"></div>
+        <div id="settings-btn"><img src="{% static "img/icon.png" %}" alt="settings"></div>
+    </div>
+    <div id="panel-container">
+        <div id="panel">
+
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="{% static "script/scripts.js" %}"></script>
+
+</html>
