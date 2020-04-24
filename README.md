@@ -1,2 +1,3 @@
-# Python-TK-Football-Match-Events-Grapher
- 
+# Football-Match-Events-Grapher
+
+Based on STATSBOMB Open Data resources.

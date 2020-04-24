@@ -10,4 +10,4 @@ def download(url):
     f.write(r.text)
 
 
-download("https://raw.githubusercontent.com/statsbomb/open-data/master/data/events/15946.json")
+download("https://raw.githubusercontent.com/statsbomb/open-data/master/data/competitions.json")

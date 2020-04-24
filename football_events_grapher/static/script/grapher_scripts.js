@@ -1,6 +1,7 @@
-let pitchColor = "#7aff7a";
-let lineColor = "#ffffff";
+let pitchColor = "#7aff7a"; // color of the pitch
+let lineColor = "#ffffff"; // color of the lines
 
+// time range slider controller
 $(function () {
   $("#time-bar").slider({
     range: true,
@@ -18,6 +19,7 @@ $(function () {
   );
 });
 
+// p5 setup function
 function setup() {
   var canvasDiv = document.getElementById("pitch");
   var height = canvasDiv.offsetHeight;
@@ -27,6 +29,7 @@ function setup() {
   background(pitchColor);
 }
 
+// p5 draw function
 function draw() {
   var canvasDiv = document.getElementById("pitch");
   var height = canvasDiv.offsetHeight;
@@ -77,6 +80,7 @@ function draw() {
   point(rightPen, (topEnd + bottomEnd) / 2); // right penalty
 }
 
+// p5 resize functon
 function windowResized() {
   var canvasDiv = document.getElementById("pitch");
   var height = canvasDiv.offsetHeight;

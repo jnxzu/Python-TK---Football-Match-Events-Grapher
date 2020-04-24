@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style/landing_style.css' %}">
+    <title>FMEG</title>
+</head>
+
+<body>
+    <div id="selection-container">
+        <h2>Select a <span id="select-type">competition</span>:</h2>
+        <div id="selection">
+            <div id="selection-scroller">
+                <div class="item" type="competition">
+                    <div class="item-color"></div>
+                    <div class="item-nfo">
+                        <div class="item-slide"></div>
+                        <div class="item-content-container">
+                            <h2>La Liga</h2>
+                            <h4>Spain</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="proceed">Proceed</button>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{% static 'script/landing_scripts.js' %}"></script>
+
+</html>

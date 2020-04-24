@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #7aff7a;
+  overflow: hidden;
+}
+
+#selection-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -20vw;
+  width: 40vw;
+  margin-top: -22.5vh;
+  height: 45vh;
+  -webkit-box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.5);
+  background: whitesmoke;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+}
+
+#selection-container h2 {
+  font-weight: 400;
+}
+
+#selection-container #selection {
+  border: 1px solid #7aff7a;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  width: 95%;
+  margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#selection-container #selection #selection-scroller {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  padding-right: 17px;
+}
+
+#selection-container #selection #selection-scroller .item {
+  border: 1px solid black;
+  -webkit-box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  margin: 2% 2% 0 2%;
+  width: 97%;
+  height: 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#selection-container #selection #selection-scroller .item .item-color {
+  width: 1%;
+}
+
+#selection-container #selection #selection-scroller .item .item-nfo {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 100%;
+  position: relative;
+}
+
+#selection-container #selection #selection-scroller .item .item-nfo .item-slide {
+  width: 100%;
+  height: 100%;
+  background: white;
+  -webkit-transition: cubic-bezier(0.425, 0.6, 0.275, 0.97) 0.7s all;
+  transition: cubic-bezier(0.425, 0.6, 0.275, 0.97) 0.7s all;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+#selection-container #selection #selection-scroller .item .item-nfo .item-slide.active {
+  width: 0%;
+}
+
+#selection-container #selection #selection-scroller .item .item-nfo .item-content-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+}
+
+#selection-container #selection #selection-scroller .item .item-nfo .item-content-container h2 {
+  color: black;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  font-size: 1.75em;
+}
+
+#selection-container #selection #selection-scroller .item .item-nfo .item-content-container h2 span {
+  min-width: 45%;
+  display: inline-block;
+  text-align: left;
+}
+
+#selection-container #selection #selection-scroller .item .item-nfo .item-content-container h2 span:first-child {
+  text-align: right;
+}
+
+#selection-container #selection #selection-scroller .item .item-nfo .item-content-container h2,
+#selection-container #selection #selection-scroller .item .item-nfo .item-content-container h4,
+#selection-container #selection #selection-scroller .item .item-nfo .item-content-container h5 {
+  margin: 0;
+  font-weight: 900;
+}
+
+#selection-container #selection #selection-scroller .item:last-of-type {
+  margin-bottom: 2%;
+}
+
+#selection-container button {
+  cursor: pointer;
+  height: 15%;
+  width: 20%;
+  margin: 3% auto;
+  border: none;
+  -webkit-transition: all 0.5s cubic-bezier(0.65, -0.25, 0.25, 1.95);
+  transition: all 0.5s cubic-bezier(0.65, -0.25, 0.25, 1.95);
+  font-weight: 900;
+  color: white;
+  background: #707070;
+  text-transform: uppercase;
+}
+
+#selection-container button:hover, #selection-container button:focus, #selection-container button:active {
+  letter-spacing: 0.125rem;
+}
+/*# sourceMappingURL=landing_style.css.map */

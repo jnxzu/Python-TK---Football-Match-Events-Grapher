@@ -1,7 +1,7 @@
 import json
 
 
-class Match:
+class MatchEvents:
     def __init__(self):
         self.teams = []
         self.starters = []
@@ -62,16 +62,16 @@ class Shot(Event):
         self.goal = goal
 
 
-def parseMatch(file):
-    with open(file) as f:
+def parseEvents(file):
+    with open(file, encoding="utf8") as f:
         data = json.load(f)
-        match = Match()
+        match_events = MatchEvents()
         for d in data[:2]:
-            match.teams.append(d['team'])
+            match_events.teams.append(d['team'])
             for p in d['tactics']['lineup']:
                 new_player = Player(p['player']['id'], p['player']
                                     ['name'], p['position']['name'], d['team']['id'], p['jersey_number'])
-                match.starters.append(new_player)
+                match_events.starters.append(new_player)
         for event in data[2:]:
 
             period = event["period"]  # PERIOD OF THE GAME (1/2 HALF)
@@ -98,7 +98,7 @@ def parseMatch(file):
                     outcome = False  # INCOMPLETE
                 new_event = Dribble(period, minute, player,
                                     team, location, outcome)
-                for p in match.starters+match.subs:
+                for p in match_events.starters+match_events.subs:
                     if p.id == player:
                         p.events.append(new_event)
                         break
@@ -116,7 +116,7 @@ def parseMatch(file):
                     outcome = False  # FOUL = FAILED
                 new_event = Tackle(period, minute, player,
                                    team, location, outcome)
-                for p in match.starters+match.subs:
+                for p in match_events.starters+match_events.subs:
                     if p.id == player:
                         p.events.append(new_event)
                         break
@@ -129,7 +129,7 @@ def parseMatch(file):
                     outcome = True  # SUCCESS
                 new_event = Interception(
                     period, minute, player, team, location, outcome)
-                for p in match.starters+match.subs:
+                for p in match_events.starters+match_events.subs:
                     if p.id == player:
                         p.events.append(new_event)
                         break
@@ -146,7 +146,7 @@ def parseMatch(file):
                     assist = True
                 new_event = Pass(period, minute, player, team,
                                  location, outcome, destination, assist)
-                for p in match.starters+match.subs:
+                for p in match_events.starters+match_events.subs:
                     if p.id == player:
                         p.events.append(new_event)
                         break
@@ -163,7 +163,7 @@ def parseMatch(file):
                 destination = event['shot']['end_location']
                 new_event = Shot(period, minute, player, team,
                                  location, outcome, destination, goal)
-                for p in match.starters+match.subs:
+                for p in match_events.starters+match_events.subs:
                     if p.id == player:
                         p.events.append(new_event)
                         break
@@ -172,6 +172,7 @@ def parseMatch(file):
                 player = event['substitution']['replacement']
                 new_player = Player(
                     player['id'], player['name'], team, None, None)
-                match.subs.append(new_player)
+                match_events.subs.append(new_player)
 
-    return match
+    return match_events
+
