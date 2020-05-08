@@ -129,4 +129,124 @@ body {
           box-sizing: content-box;
   padding-right: 17px;
 }
+
+#panel-container #panel dl {
+  margin: 3vh auto;
+  margin-left: 3vw;
+  max-width: 80%;
+}
+
+#panel-container #panel dl dt {
+  background: white;
+  border-left: 8px solid #131313;
+  font-weight: 600;
+  padding: 15px;
+  position: relative;
+  text-align: left;
+  text-transform: uppercase;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+#panel-container #panel dl dt span {
+  margin-right: 5px;
+}
+
+#panel-container #panel dl dt .player-pos,
+#panel-container #panel dl dt .player-num {
+  font-weight: 300;
+  font-size: small;
+  font-style: italic;
+}
+
+#panel-container #panel dl dt .player-name {
+  font-weight: 500;
+  font-style: normal;
+  font-size: large;
+  margin-right: 10px;
+}
+
+#panel-container #panel dl dt:hover {
+  cursor: pointer;
+}
+
+#panel-container #panel dl dt + dd {
+  max-height: 0;
+  margin-bottom: 1vh;
+}
+
+#panel-container #panel dl dt + dd .event {
+  visibility: hidden;
+}
+
+#panel-container #panel dl dt.open {
+  border: 4px solid #131313;
+  background: #7aff7a;
+}
+
+#panel-container #panel dl dt.open + dd {
+  background: white;
+  max-height: 250px;
+}
+
+#panel-container #panel dl dt.open + dd .event {
+  visibility: visible;
+}
+
+#panel-container #panel dl dd {
+  background: #131313;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+#panel-container #panel dl dd .event,
+#panel-container #panel dl dd .event-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 90%;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 5%;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#panel-container #panel dl dd .event .events-first,
+#panel-container #panel dl dd .event-info .events-first {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+#panel-container #panel dl dd .event .stat-num {
+  text-align: center;
+  cursor: pointer;
+  height: 40px;
+  width: 30px;
+  padding: 5px 5px;
+  margin-right: 5px;
+  line-height: 30px;
+  font-weight: 400;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#panel-container #panel dl dd .event .stat-num:last-of-type {
+  margin: 0;
+}
+
+#panel-container #panel dl dd .event-info {
+  font-weight: 100;
+  font-style: italic;
+}
 /*# sourceMappingURL=grapher_style.css.map */

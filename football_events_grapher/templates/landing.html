@@ -15,16 +15,18 @@
         <h2>Select a <span id="select-type">competition</span>:</h2>
         <div id="selection">
             <div id="selection-scroller">
-                <div class="item" type="competition">
+                {% for c in comps %}
+                <div id={{c.comp_id}} class="item" type="competition">
                     <div class="item-color"></div>
                     <div class="item-nfo">
                         <div class="item-slide"></div>
                         <div class="item-content-container">
-                            <h2>La Liga</h2>
-                            <h4>Spain</h4>
+                            <h2>{{c.comp}}</h2>
+                            <h4>{{c.country}}</h4>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
         <button id="proceed">Proceed</button>

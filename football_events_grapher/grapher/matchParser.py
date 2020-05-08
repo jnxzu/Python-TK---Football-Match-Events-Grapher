@@ -70,7 +70,7 @@ def parseEvents(file):
             match_events.teams.append(d['team'])
             for p in d['tactics']['lineup']:
                 new_player = Player(p['player']['id'], p['player']
-                                    ['name'], p['position']['name'], d['team']['id'], p['jersey_number'])
+                                    ['name'], d['team']['id'], "".join([w[0] for w in p['position']['name'].split(" ")]),  p['jersey_number'])
                 match_events.starters.append(new_player)
         for event in data[2:]:
 
@@ -175,4 +175,3 @@ def parseEvents(file):
                 match_events.subs.append(new_player)
 
     return match_events
-
