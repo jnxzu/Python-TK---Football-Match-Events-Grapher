@@ -26,6 +26,7 @@ function loadItems() {
     var type = clickedObject.attr("type");
     var id = clickedObject.attr("id");
     $("#proceed").css("background", "#7aff7a");
+    $("#proceed").unbind();
     $("#proceed").click(function () {
       if (type === "competition") {
         comp_id = id;
@@ -118,12 +119,14 @@ function loadItems() {
           .textContent.split(" ");
         var date = clickedObject.find("h4")[0].textContent;
 
-        sessionStorage["teams"] = [homeSpanText[0], awaySpanText[2]].join(
-          " - "
-        );
-        sessionStorage["scores"] = [homeSpanText[2], awaySpanText[0]].join(
-          " - "
-        );
+        sessionStorage["teams"] = [
+          homeSpanText.slice(0, -2).join(" "),
+          awaySpanText.slice(2).join(" "),
+        ].join(" - ");
+        sessionStorage["scores"] = [
+          homeSpanText[homeSpanText.length - 1],
+          awaySpanText[0],
+        ].join(" - ");
         sessionStorage["date"] = date;
 
         window.location = "/grapher?match_id=" + match_id;

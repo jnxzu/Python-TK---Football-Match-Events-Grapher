@@ -28,41 +28,143 @@
             </div>
         </div>
         <div id="pitch"></div>
-        <div id="settings-btn"><img src="{% static 'img/icon.png' %}" alt="settings"></div>
     </div>
     <div id="panel-container">
         <div id="panel">
             <dl>
-                {% for p in match.starters %}
+                {% for p in match.teams.0.starters %}
                 <dt><span class="player-pos">{{p.pos}}</span><span class="player-name">{{p.name}}</span><span
                         class="player-num">{{p.num}}</span></dt>
-                <dd>
+                <dd start="start" team_id="{{p.team}}" player_id="{{p.id}}">
                     <div class="event-info"><span class="events-first">Events</span><span>All - Success - Fail</span>
                     </div>
-                    <div class="event"><span class="events-first">Tackles</span>
-                        <div class="stat-num">###</div>
-                        <div class="stat-num">##</div>
-                        <div class="stat-num">#</div>
+                    <div ?="Tackle" class="event"><span class="events-first">Tackles</span>
+                        <div ?="A" class="stat-num">{{p.tackle}}</div>
+                        <div ?="S" class="stat-num">{{p.tackleS}}</div>
+                        <div ?="F" class="stat-num">{{p.tackleF}}</div>
                     </div>
-                    <div class="event"><span class="events-first">Interceptions</span>
-                        <div class="stat-num">###</div>
-                        <div class="stat-num">##</div>
-                        <div class="stat-num">#</div>
+                    <div ?="Interception" class="event"><span class="events-first">Interceptions</span>
+                        <div ?="A" class="stat-num">{{p.inter}}</div>
+                        <div ?="S" class="stat-num">{{p.interS}}</div>
+                        <div ?="F" class="stat-num">{{p.interF}}</div>
                     </div>
-                    <div class="event"><span class="events-first">Dribbles</span>
-                        <div class="stat-num">###</div>
-                        <div class="stat-num">##</div>
-                        <div class="stat-num">#</div>
+                    <div ?="Dribble" class="event"><span class="events-first">Dribbles</span>
+                        <div ?="A" class="stat-num">{{p.dribble}}</div>
+                        <div ?="S" class="stat-num">{{p.dribbleS}}</div>
+                        <div ?="F" class="stat-num">{{p.dribbleF}}</div>
                     </div>
-                    <div class="event"><span class="events-first">Passes</span>
-                        <div class="stat-num">###</div>
-                        <div class="stat-num">##</div>
-                        <div class="stat-num">#</div>
+                    <div ?="Pass" class="event"><span class="events-first">Passes</span>
+                        <div ?="A" class="stat-num">{{p.pas}}</div>
+                        <div ?="S" class="stat-num">{{p.pasS}}</div>
+                        <div ?="F" class="stat-num">{{p.pasF}}</div>
                     </div>
-                    <div class="event"><span class="events-first">Shots</span>
-                        <div class="stat-num">###</div>
-                        <div class="stat-num">##</div>
-                        <div class="stat-num">#</div>
+                    <div ?="Shot" class="event"><span class="events-first">Shots</span>
+                        <div ?="A" class="stat-num">{{p.shot}}</div>
+                        <div ?="S" class="stat-num">{{p.shotS}}</div>
+                        <div ?="F" class="stat-num">{{p.shotF}}</div>
+                    </div>
+                </dd>
+                {% endfor %}
+            </dl>
+            <dl>
+                {% for p in match.teams.0.subs %}
+                <dt><span class="player-name">{{p.name}}</span></dt>
+                <dd start="sub" team_id="{{p.team}}" player_id="{{p.id}}">
+                    <div class="event-info"><span class="events-first">Events</span><span>All - Success - Fail</span>
+                    </div>
+                    <div ?="Tackle" class="event"><span class="events-first">Tackles</span>
+                        <div ?="A" class="stat-num">{{p.tackle}}</div>
+                        <div ?="S" class="stat-num">{{p.tackleS}}</div>
+                        <div ?="F" class="stat-num">{{p.tackleF}}</div>
+                    </div>
+                    <div ?="Interception" class="event"><span class="events-first">Interceptions</span>
+                        <div ?="A" class="stat-num">{{p.inter}}</div>
+                        <div ?="S" class="stat-num">{{p.interS}}</div>
+                        <div ?="F" class="stat-num">{{p.interF}}</div>
+                    </div>
+                    <div ?="Dribble" class="event"><span class="events-first">Dribbles</span>
+                        <div ?="A" class="stat-num">{{p.dribble}}</div>
+                        <div ?="S" class="stat-num">{{p.dribbleS}}</div>
+                        <div ?="F" class="stat-num">{{p.dribbleF}}</div>
+                    </div>
+                    <div ?="Pass" class="event"><span class="events-first">Passes</span>
+                        <div ?="A" class="stat-num">{{p.pas}}</div>
+                        <div ?="S" class="stat-num">{{p.pasS}}</div>
+                        <div ?="F" class="stat-num">{{p.pasF}}</div>
+                    </div>
+                    <div ?="Shot" class="event"><span class="events-first">Shots</span>
+                        <div ?="A" class="stat-num">{{p.shot}}</div>
+                        <div ?="S" class="stat-num">{{p.shotS}}</div>
+                        <div ?="F" class="stat-num">{{p.shotF}}</div>
+                    </div>
+                </dd>
+                {% endfor %}
+            </dl>
+            <dl>
+                {% for p in match.teams.1.starters %}
+                <dt><span class="player-pos">{{p.pos}}</span><span class="player-name">{{p.name}}</span><span
+                        class="player-num">{{p.num}}</span></dt>
+                <dd start="start" team_id="{{p.team}}" player_id="{{p.id}}">
+                    <div class="event-info"><span class="events-first">Events</span><span>All - Success - Fail</span>
+                    </div>
+                    <div ?="Tackle" class="event"><span class="events-first">Tackles</span>
+                        <div ?="A" class="stat-num">{{p.tackle}}</div>
+                        <div ?="S" class="stat-num">{{p.tackleS}}</div>
+                        <div ?="F" class="stat-num">{{p.tackleF}}</div>
+                    </div>
+                    <div ?="Interception" class="event"><span class="events-first">Interceptions</span>
+                        <div ?="A" class="stat-num">{{p.inter}}</div>
+                        <div ?="S" class="stat-num">{{p.interS}}</div>
+                        <div ?="F" class="stat-num">{{p.interF}}</div>
+                    </div>
+                    <div ?="Dribble" class="event"><span class="events-first">Dribbles</span>
+                        <div ?="A" class="stat-num">{{p.dribble}}</div>
+                        <div ?="S" class="stat-num">{{p.dribbleS}}</div>
+                        <div ?="F" class="stat-num">{{p.dribbleF}}</div>
+                    </div>
+                    <div ?="Pass" class="event"><span class="events-first">Passes</span>
+                        <div ?="A" class="stat-num">{{p.pas}}</div>
+                        <div ?="S" class="stat-num">{{p.pasS}}</div>
+                        <div ?="F" class="stat-num">{{p.pasF}}</div>
+                    </div>
+                    <div ?="Shot" class="event"><span class="events-first">Shots</span>
+                        <div ?="A" class="stat-num">{{p.shot}}</div>
+                        <div ?="S" class="stat-num">{{p.shotS}}</div>
+                        <div ?="F" class="stat-num">{{p.shotF}}</div>
+                    </div>
+                </dd>
+                {% endfor %}
+            </dl>
+            <dl>
+                {% for p in match.teams.1.subs %}
+                <dt><span class="player-name">{{p.name}}</span></dt>
+                <dd start="start" team_id="{{p.team}}" player_id="{{p.id}}">
+                    <div class="event-info"><span class="events-first">Events</span><span>All - Success - Fail</span>
+                    </div>
+                    <div ?="Tackle" class="event"><span class="events-first">Tackles</span>
+                        <div ?="A" class="stat-num">{{p.tackle}}</div>
+                        <div ?="S" class="stat-num">{{p.tackleS}}</div>
+                        <div ?="F" class="stat-num">{{p.tackleF}}</div>
+                    </div>
+                    <div ?="Interception" class="event"><span class="events-first">Interceptions</span>
+                        <div ?="A" class="stat-num">{{p.inter}}</div>
+                        <div ?="S" class="stat-num">{{p.interS}}</div>
+                        <div ?="F" class="stat-num">{{p.interF}}</div>
+                    </div>
+                    <div ?="Dribble" class="event"><span class="events-first">Dribbles</span>
+                        <div ?="A" class="stat-num">{{p.dribble}}</div>
+                        <div ?="S" class="stat-num">{{p.dribbleS}}</div>
+                        <div ?="F" class="stat-num">{{p.dribbleF}}</div>
+                    </div>
+                    <div ?="Pass" class="event"><span class="events-first">Passes</span>
+                        <div ?="A" class="stat-num">{{p.pas}}</div>
+                        <div ?="S" class="stat-num">{{p.pasS}}</div>
+                        <div ?="F" class="stat-num">{{p.pasF}}</div>
+                    </div>
+                    <div ?="Shot" class="event"><span class="events-first">Shots</span>
+                        <div ?="A" class="stat-num">{{p.shot}}</div>
+                        <div ?="S" class="stat-num">{{p.shotS}}</div>
+                        <div ?="F" class="stat-num">{{p.shotF}}</div>
                     </div>
                 </dd>
                 {% endfor %}
@@ -74,109 +176,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
-    var pitchColor = "#7aff7a"; // color of the pitch
-    var lineColor = "#ffffff"; // color of the lines
-
-    var events = {{ match_serial| safe }};
-
-    // time range slider controller
-    $(function () {
-        $("dt").click(function () {
-            $(this).toggleClass("open");
-            if ($(this).hasClass("open"))
-                $("dt").not(this).removeClass("open");
-        })
-        // if (sessionStorage.getItem('teams') === null) {
-        // location.href = '/404';
-        // }
-        $("#context-h").find("h1").text(sessionStorage["teams"]);
-        $("#context-h").find("h2").text(sessionStorage["scores"]);
-        $("#context-h").find("h4").text(sessionStorage["date"]);
-        $("#time-bar").slider({
-            range: true,
-            min: 1,
-            max: 90,
-            values: [1, 90],
-            slide: function (event, ui) {
-                $("#amount").val(ui.values[0] + " - " + ui.values[1]);
-            },
-        });
-        $("#amount").val(
-            $("#time-bar").slider("values", 0) +
-            " - " +
-            $("#time-bar").slider("values", 1)
-        );
-    });
-
-    // p5 setup function
-    function setup() {
-        var canvasDiv = document.getElementById("pitch");
-        var height = canvasDiv.offsetHeight;
-        canvasDiv.style.background = pitchColor;
-        var canvas = createCanvas(height * 1.5, height);
-        canvas.parent("pitch");
-        background(pitchColor);
-    }
-
-    // p5 draw function
-    function draw() {
-        var canvasDiv = document.getElementById("pitch");
-        var height = canvasDiv.offsetHeight;
-        var width = height * 1.5;
-
-        var leftEnd = 0.04 * width;
-        var rightEnd = 0.96 * width;
-        var pitchW = rightEnd - leftEnd;
-        var topEnd = 0.055 * height;
-        var bottomEnd = 0.945 * height;
-        var pitchH = bottomEnd - topEnd;
-
-        var topBox = topEnd + pitchH / 4.44;
-        var bottomBox = bottomEnd - pitchH / 4.44;
-        var leftBoxEdge = leftEnd + pitchW / 6.66;
-        var rightBoxEdge = rightEnd - pitchW / 6.66;
-
-        var topPost = topEnd + pitchH / 2.22;
-        var bottomPost = bottomEnd - pitchH / 2.22;
-
-        var top6yd = topEnd + pitchH / 2.66;
-        var bottom6yd = bottomEnd - pitchH / 2.66;
-        var left6ydEdge = leftEnd + pitchW / 20;
-        var right6ydEdge = rightEnd - pitchW / 20;
-
-        var leftPen = leftEnd + pitchW / 10;
-        var rightPen = rightEnd - pitchW / 10;
-
-        stroke(lineColor);
-        strokeWeight(1);
-        noFill();
-        rectMode(CORNERS);
-        rect(leftEnd, topEnd, rightEnd, bottomEnd); // pitch
-        line((leftEnd + rightEnd) / 2, topEnd, (leftEnd + rightEnd) / 2, bottomEnd); // halfway line
-        circle((leftEnd + rightEnd) / 2, (topEnd + bottomEnd) / 2, pitchH / 3.71); // center circle
-        circle(leftPen, (topEnd + bottomEnd) / 2, pitchH / 3.71); // left circle
-        circle(rightPen, (topEnd + bottomEnd) / 2, pitchH / 3.71); // right circle
-        fill(pitchColor);
-        rect(leftEnd, topBox, leftBoxEdge, bottomBox); // left box
-        rect(rightBoxEdge, topBox, rightEnd, bottomBox); // right box
-        rect(leftEnd - 3, topPost, leftEnd, bottomPost); // left goal
-        rect(rightEnd, topPost, rightEnd + 3, bottomPost); // right goal
-        rect(leftEnd, top6yd, left6ydEdge, bottom6yd); // left 6yd box
-        rect(right6ydEdge, top6yd, rightEnd, bottom6yd); // right 6yd box
-        strokeWeight(8);
-        point((leftEnd + rightEnd) / 2, (topEnd + bottomEnd) / 2); // kickoff
-        point(leftPen, (topEnd + bottomEnd) / 2); // left penalty
-        point(rightPen, (topEnd + bottomEnd) / 2); // right penalty
-    }
-
-    // p5 resize functon
-    function windowResized() {
-        var canvasDiv = document.getElementById("pitch");
-        var height = canvasDiv.offsetHeight;
-        var canvas = resizeCanvas(height * 1.5, height);
-        canvas.parent("pitch");
-    }
-
+    var events = {{ match_serial | safe }};
 </script>
+<script src="{% static 'script/grapher_scripts.js' %}"></script>
 
 </html>
