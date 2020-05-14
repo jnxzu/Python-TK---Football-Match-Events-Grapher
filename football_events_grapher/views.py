@@ -10,6 +10,7 @@ import football_events_grapher.grapher.matchParser as mp
 import football_events_grapher.grapher.seasonParser as sp
 
 import json
+import os
 
 
 def landing(request):
@@ -17,6 +18,7 @@ def landing(request):
         "https://raw.githubusercontent.com/statsbomb/open-data/master/data/competitions.json")
     comps = cp.parseComps("competitions.json")
     template = loader.get_template('landing.html')
+    os.remove("competitions.json")
     return HttpResponse(template.render({'comps': comps}, request))
 
 
@@ -32,6 +34,7 @@ def get_matches(request):
     szn_url = base_url + comp_id + "/" + szn_id + ".json"
     fd.download(szn_url)
     matches = sp.parseMatches(szn_id + ".json")
+    os.remove(szn_id + ".json")
     return JsonResponse([m.__dict__ for m in matches], safe=False)
 
 
@@ -41,6 +44,7 @@ def main(request):
     match_url = base_url + match_id + ".json"
     fd.download(match_url)
     match = mp.parseEvents(match_id + ".json")
+    os.remove(match_id + ".json")
     template = loader.get_template('main.html')
     match_serialized = json.dumps(
         match.__dict__, default=lambda o: o.__dict__, indent=4)
