@@ -18,13 +18,13 @@ def landing(request):
         "https://raw.githubusercontent.com/statsbomb/open-data/master/data/competitions.json")
     comps = cp.parseComps("competitions.json")
     template = loader.get_template('landing.html')
-    os.remove("competitions.json")
     return HttpResponse(template.render({'comps': comps}, request))
 
 
 def get_seasons(request):
     comp = int(request.POST['comp_id'])
     szns = cp.parseSeasons("competitions.json", comp)
+    os.remove("competitions.json")
     return JsonResponse([s.__dict__ for s in szns], safe=False)
 
 
