@@ -1,14 +1,14 @@
-var pitchColor = "#7aff7a"; // color of the pitch
-var lineColor = "#ffffff"; // color of the lines
-var successColor = "#3a34eb";
-var failColor = "#ed0909";
-var winColor = "#f7c305"; // goal or assist
+let pitchColor = "#7aff7a"; // color of the pitch
+let lineColor = "#ffffff"; // color of the lines
+let successColor = "#3a34eb";
+let failColor = "#ed0909";
+let winColor = "#f7c305"; // goal or assist
 
-var timeMin = 1;
-var timeMax = 90;
+let timeMin = 1;
+let timeMax = 90;
 
-var selectedEvents;
-var eventsToDraw = [];
+let selectedEvents;
+let eventsToDraw = [];
 
 // time range slider controller
 $(function () {
@@ -80,42 +80,42 @@ $(function () {
 
 // p5 setup function
 function setup() {
-  var canvasDiv = document.getElementById("pitch");
-  var height = canvasDiv.offsetHeight;
+  let canvasDiv = document.getElementById("pitch");
+  let height = canvasDiv.offsetHeight;
   canvasDiv.style.background = pitchColor;
-  var canvas = createCanvas(height * 1.5, height);
+  let canvas = createCanvas(height * 1.5, height);
   canvas.parent("pitch");
   background(pitchColor);
 }
 
 // p5 draw function
 function draw() {
-  var canvasDiv = document.getElementById("pitch");
-  var height = canvasDiv.offsetHeight;
-  var width = height * 1.5;
+  let canvasDiv = document.getElementById("pitch");
+  let height = canvasDiv.offsetHeight;
+  let width = height * 1.5;
 
-  var leftEnd = 0.04 * width;
-  var rightEnd = 0.96 * width;
-  var pitchW = rightEnd - leftEnd;
-  var topEnd = 0.055 * height;
-  var bottomEnd = 0.945 * height;
-  var pitchH = bottomEnd - topEnd;
+  let leftEnd = 0.04 * width;
+  let rightEnd = 0.96 * width;
+  let pitchW = rightEnd - leftEnd;
+  let topEnd = 0.055 * height;
+  let bottomEnd = 0.945 * height;
+  let pitchH = bottomEnd - topEnd;
 
-  var topBox = topEnd + pitchH / 4.44;
-  var bottomBox = bottomEnd - pitchH / 4.44;
-  var leftBoxEdge = leftEnd + pitchW / 6.66;
-  var rightBoxEdge = rightEnd - pitchW / 6.66;
+  let topBox = topEnd + pitchH / 4.44;
+  let bottomBox = bottomEnd - pitchH / 4.44;
+  let leftBoxEdge = leftEnd + pitchW / 6.66;
+  let rightBoxEdge = rightEnd - pitchW / 6.66;
 
-  var topPost = topEnd + pitchH / 2.22;
-  var bottomPost = bottomEnd - pitchH / 2.22;
+  let topPost = topEnd + pitchH / 2.22;
+  let bottomPost = bottomEnd - pitchH / 2.22;
 
-  var top6yd = topEnd + pitchH / 2.66;
-  var bottom6yd = bottomEnd - pitchH / 2.66;
-  var left6ydEdge = leftEnd + pitchW / 20;
-  var right6ydEdge = rightEnd - pitchW / 20;
+  let top6yd = topEnd + pitchH / 2.66;
+  let bottom6yd = bottomEnd - pitchH / 2.66;
+  let left6ydEdge = leftEnd + pitchW / 20;
+  let right6ydEdge = rightEnd - pitchW / 20;
 
-  var leftPen = leftEnd + pitchW / 10;
-  var rightPen = rightEnd - pitchW / 10;
+  let leftPen = leftEnd + pitchW / 10;
+  let rightPen = rightEnd - pitchW / 10;
 
   stroke(lineColor);
   strokeWeight(1);
@@ -170,8 +170,8 @@ function draw() {
 
 // p5 resize functon
 function windowResized() {
-  var canvasDiv = document.getElementById("pitch");
-  var height = canvasDiv.offsetHeight;
+  let canvasDiv = document.getElementById("pitch");
+  let height = canvasDiv.offsetHeight;
   resizeCanvas(height * 1.5, height);
 }
 
@@ -185,7 +185,7 @@ function drawLine(start, end, outcome, win) {
   strokeWeight(3);
   fill(myColor);
   line(start.x, start.y, end.x, end.y);
-  var angle = atan2(start.y - end.y, start.x - end.x);
+  let angle = atan2(start.y - end.y, start.x - end.x);
   translate(end.x, end.y);
   rotate(angle - HALF_PI);
   triangle(-7 * 0.5, 7, 7 * 0.5, 7, 0, -7 / 2);

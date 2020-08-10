@@ -1,7 +1,7 @@
-var comp_id = "";
-var season_id = "";
-var match_id = "";
-var comp_name = "";
+let comp_id = "";
+let season_id = "";
+let match_id = "";
+let comp_name = "";
 
 function loadItems() {
   $("#proceed").css("background", "#707070");
@@ -22,9 +22,9 @@ function loadItems() {
     }
   );
   $(".item").click(function () {
-    var clickedObject = $(this);
-    var type = clickedObject.attr("type");
-    var id = clickedObject.attr("id");
+    let clickedObject = $(this);
+    let type = clickedObject.attr("type");
+    let id = clickedObject.attr("id");
     $("#proceed").css("background", "#7aff7a");
     $("#proceed").unbind();
     $("#proceed").click(function () {
@@ -40,9 +40,9 @@ function loadItems() {
             $("#select-type").fadeTo(500, 0.01, function () {
               $("#select-type").text("season").fadeTo(500, 1);
             });
-            var elements = [];
+            let elements = [];
             response.forEach((szn) => {
-              var el = $(
+              let el = $(
                 "<div id=" +
                   szn.season_id +
                   " class='item' type='season' style='display: none'><div class='item-color'></div><div class='item-nfo'><div class='item-slide'></div><div class='item-content-container'><h2>" +
@@ -75,9 +75,9 @@ function loadItems() {
             $("#select-type").fadeTo(500, 0.01, function () {
               $("#select-type").text("match").fadeTo(500, 1);
             });
-            var elements = [];
+            let elements = [];
             response.forEach((match) => {
-              var el = $(
+              let el = $(
                 "<div id=" +
                   match.id +
                   " class='item' type='match' style='display: none'><div class='item-color'></div><div class='item-nfo'><div class='item-slide'></div><div class='item-content-container'><h2><span>" +
@@ -109,15 +109,15 @@ function loadItems() {
       }
       if (type === "match") {
         match_id = id;
-        var homeSpanText = clickedObject
+        let homeSpanText = clickedObject
           .find("h2")
           .find("span")[0]
           .textContent.split(" ");
-        var awaySpanText = clickedObject
+        let awaySpanText = clickedObject
           .find("h2")
           .find("span")[1]
           .textContent.split(" ");
-        var date = clickedObject.find("h4")[0].textContent;
+        let date = clickedObject.find("h4")[0].textContent;
 
         sessionStorage["teams"] = [
           homeSpanText.slice(0, -2).join(" "),

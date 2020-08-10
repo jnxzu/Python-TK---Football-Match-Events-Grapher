@@ -3,9 +3,9 @@ import os
 
 
 class Competition:
-    def __init__(self, comp_id, comp, country):
+    def __init__(self, comp_id, comp_name, country):
         self.comp_id = comp_id
-        self.comp = comp
+        self.comp_name = comp_name
         self.country = country
 
     def __hash__(self):
@@ -29,22 +29,22 @@ def parseComps(file):
         comps = []
         data = json.load(f)
         for d in data:
-            comp_id, comp, country = d["competition_id"], d[
+            comp_id, comp_name, country = d["competition_id"], d[
                 "competition_name"], d["country_name"]
-            competition = Competition(comp_id, comp, country)
+            competition = Competition(comp_id, comp_name, country)
             if competition not in comps:
                 comps.append(competition)
     return comps
 
 
-def parseSeasons(file, comp):
+def parseSeasons(file, comp_id):
     with open(file, encoding="utf8") as f:
         szns = []
         data = json.load(f)
         for d in data:
-            comp_id, szn_id, season = d["competition_id"], d["season_id"], d[
+            d_comp_id, szn_id, season = d["competition_id"], d["season_id"], d[
                 "season_name"]
             szn = Season(szn_id, season)
-            if comp_id == comp:
+            if comp_id == d_comp_id:
                 szns.append(szn)
     return szns

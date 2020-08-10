@@ -24,7 +24,7 @@ def landing(request):
 def get_seasons(request):
     comp = int(request.POST['comp_id'])
     szns = cp.parseSeasons("competitions.json", comp)
-    os.remove("competitions.json")
+    # os.remove("competitions.json")
     return JsonResponse([s.__dict__ for s in szns], safe=False)
 
 
