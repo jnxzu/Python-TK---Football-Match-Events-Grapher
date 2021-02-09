@@ -24,27 +24,47 @@ class Season:
         self.season_name = season
 
 
-def parseComps(file):
-    with open(file, encoding="utf8") as f:
-        comps = []
-        data = json.load(f)
-        for d in data:
-            comp_id, comp_name, country = d["competition_id"], d[
-                "competition_name"], d["country_name"]
-            competition = Competition(comp_id, comp_name, country)
-            if competition not in comps:
-                comps.append(competition)
+def parseComps(data):
+    comps = []
+    for d in data:
+        comp_id, comp_name, country = d["competition_id"], d[
+            "competition_name"], d["country_name"]
+        competition = Competition(comp_id, comp_name, country)
+        if competition not in comps:
+            comps.append(competition)
     return comps
 
+# def parseComps(file):
+#     with open(file, encoding="utf8") as f:
+#         comps = []
+#         data = json.load(f)
+#         for d in data:
+#             comp_id, comp_name, country = d["competition_id"], d[
+#                 "competition_name"], d["country_name"]
+#             competition = Competition(comp_id, comp_name, country)
+#             if competition not in comps:
+#                 comps.append(competition)
+#     return comps
 
-def parseSeasons(file, comp_id):
-    with open(file, encoding="utf8") as f:
-        szns = []
-        data = json.load(f)
-        for d in data:
-            d_comp_id, szn_id, season = d["competition_id"], d["season_id"], d[
-                "season_name"]
-            szn = Season(szn_id, season)
-            if comp_id == d_comp_id:
-                szns.append(szn)
+
+def parseSeasons(data, comp_id):
+    szns = []
+    for d in data:
+        d_comp_id, szn_id, season = d["competition_id"], d["season_id"], d[
+            "season_name"]
+        szn = Season(szn_id, season)
+        if comp_id == d_comp_id:
+            szns.append(szn)
     return szns
+
+# def parseSeasons(file, comp_id):
+#     with open(file, encoding="utf8") as f:
+#         szns = []
+#         data = json.load(f)
+#         for d in data:
+#             d_comp_id, szn_id, season = d["competition_id"], d["season_id"], d[
+#                 "season_name"]
+#             szn = Season(szn_id, season)
+#             if comp_id == d_comp_id:
+#                 szns.append(szn)
+#     return szns

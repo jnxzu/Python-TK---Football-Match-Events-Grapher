@@ -79,161 +79,320 @@ class Shot(Event):
         self.goal = goal
 
 
-def parseEvents(file):
-    with open(file, encoding="utf8") as f:
-        data = json.load(f)
-        match_events = MatchEvents()
-        for d in data[:2]:
-            for p in d['tactics']['lineup']:
-                team_id = d['team']['id']
-                new_player = Player(p['player']['id'], p['player']
-                                    ['name'], team_id, "".join([w[0] for w in p['position']['name'].split(" ")]),  p['jersey_number'])
-                if not team_id in [t.id for t in match_events.teams]:
-                    match_events.teams.append(Team(team_id, d['team']['name']))
-                for t in match_events.teams:
-                    if t.id == team_id:
-                        t.starters.append(new_player)
-        for event in data[2:]:
+def parseEvents(data):
+    match_events = MatchEvents()
+    for d in data[:2]:
+        for p in d['tactics']['lineup']:
+            team_id = d['team']['id']
+            new_player = Player(p['player']['id'], p['player']
+                                ['name'], team_id, "".join([w[0] for w in p['position']['name'].split(" ")]),  p['jersey_number'])
+            if not team_id in [t.id for t in match_events.teams]:
+                match_events.teams.append(Team(team_id, d['team']['name']))
+            for t in match_events.teams:
+                if t.id == team_id:
+                    t.starters.append(new_player)
+    for event in data[2:]:
 
-            period = event["period"]  # PERIOD OF THE GAME (1/2 HALF)
-            if period > 2:
-                break  # NO SUPPORT FOR EXTRA TIME/PENALTIES
-            minute = event["minute"]  # MINUTE OF THE MATCH
+        period = event["period"]  # PERIOD OF THE GAME (1/2 HALF)
+        if period > 2:
+            break  # NO SUPPORT FOR EXTRA TIME/PENALTIES
+        minute = event["minute"]  # MINUTE OF THE MATCH
 
-            if period == 1 and minute > 45:
-                # ADDITIONAL TIME (1ST HALF) COUNTED AS 45TH MINUTE
-                minute = 45
-            elif period == 2 and minute > 90:
-                # ADDITIONAL TIME (2ND HALF) COUNTED AS 90TH MINUTE
-                minute = 90
+        if period == 1 and minute > 45:
+            # ADDITIONAL TIME (1ST HALF) COUNTED AS 45TH MINUTE
+            minute = 45
+        elif period == 2 and minute > 90:
+            # ADDITIONAL TIME (2ND HALF) COUNTED AS 90TH MINUTE
+            minute = 90
 
-            event_type = event["type"]["id"]  # EVENT TYPE
-            if event_type not in [14, 4, 21, 10, 30, 16, 19]:
-                # IGNORE UNSUPPORTED EVENTS (PREVENTS ISSUES WITH FOLLOWING FIELDS NOT BEING PRESENT)
-                continue
+        event_type = event["type"]["id"]  # EVENT TYPE
+        if event_type not in [14, 4, 21, 10, 30, 16, 19]:
+            # IGNORE UNSUPPORTED EVENTS (PREVENTS ISSUES WITH FOLLOWING FIELDS NOT BEING PRESENT)
+            continue
 
-            player = event["player"]["id"]  # PLAYER ID
-            team = event["team"]["id"]  # TEAM ID
-            if event_type != 19:
-                location = event["location"]  # LOCATION [X,Y]
-            if event_type == 14:  # DRIBBLE
-                outcome = event["dribble"]["outcome"]["id"]
-                # IF DRIBBLE COMPLETE (ID 8) OR INCOMPLETE (ID 9)
-                if outcome == 8:
-                    outcome = True  # COMPLETE
-                else:
-                    outcome = False  # INCOMPLETE
-                new_event = Dribble(period, minute, player,
-                                    team, location, outcome)
-                for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
-                    if p.id == player:
-                        p.dribble += 1
-                        if outcome:
-                            p.dribbleS += 1
-                        else:
-                            p.dribbleF += 1
-                        p.events.append(new_event)
-                        break
+        player = event["player"]["id"]  # PLAYER ID
+        team = event["team"]["id"]  # TEAM ID
+        if event_type != 19:
+            location = event["location"]  # LOCATION [X,Y]
+        if event_type == 14:  # DRIBBLE
+            outcome = event["dribble"]["outcome"]["id"]
+            # IF DRIBBLE COMPLETE (ID 8) OR INCOMPLETE (ID 9)
+            if outcome == 8:
+                outcome = True  # COMPLETE
+            else:
+                outcome = False  # INCOMPLETE
+            new_event = Dribble(period, minute, player,
+                                team, location, outcome)
+            for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+                if p.id == player:
+                    p.dribble += 1
+                    if outcome:
+                        p.dribbleS += 1
+                    else:
+                        p.dribbleF += 1
+                    p.events.append(new_event)
+                    break
 
-            elif event_type == 4 or event_type == 21:  # DUEL OR FOUL COMMITED
-                if event_type == 4:
-                    # ID 11 = TACKLE, NO SUPPORT FOR AERIAL DUELS
-                    if event["duel"]["type"]["id"] == 11:
-                        outcome = event["duel"]["outcome"]["name"]
-                        if "Lost" in outcome:
-                            outcome = False  # FAILED
-                        else:
-                            outcome = True  # SUCCESS
-                if event_type == 21:
-                    outcome = False  # FOUL = FAILED
-                new_event = Tackle(period, minute, player,
-                                   team, location, outcome)
-                for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
-                    if p.id == player:
-                        p.tackle += 1
-                        if outcome:
-                            p.tackleS += 1
-                        else:
-                            p.tackleF += 1
-                        p.events.append(new_event)
-                        break
+        elif event_type == 4 or event_type == 21:  # DUEL OR FOUL COMMITED
+            if event_type == 4:
+                # ID 11 = TACKLE, NO SUPPORT FOR AERIAL DUELS
+                if event["duel"]["type"]["id"] == 11:
+                    outcome = event["duel"]["outcome"]["name"]
+                    if "Lost" in outcome:
+                        outcome = False  # FAILED
+                    else:
+                        outcome = True  # SUCCESS
+            if event_type == 21:
+                outcome = False  # FOUL = FAILED
+            new_event = Tackle(period, minute, player,
+                               team, location, outcome)
+            for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+                if p.id == player:
+                    p.tackle += 1
+                    if outcome:
+                        p.tackleS += 1
+                    else:
+                        p.tackleF += 1
+                    p.events.append(new_event)
+                    break
 
-            elif event_type == 10:  # INTERCEPTION
-                outcome = event['interception']['outcome']['name']
-                if "Lost" in outcome:
-                    outcome = False  # FAILED
-                else:
-                    outcome = True  # SUCCESS
-                new_event = Interception(
-                    period, minute, player, team, location, outcome)
-                for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
-                    if p.id == player:
-                        p.inter += 1
-                        if outcome:
-                            p.interS += 1
-                        else:
-                            p.interF += 1
-                        p.events.append(new_event)
-                        break
+        elif event_type == 10:  # INTERCEPTION
+            outcome = event['interception']['outcome']['name']
+            if "Lost" in outcome:
+                outcome = False  # FAILED
+            else:
+                outcome = True  # SUCCESS
+            new_event = Interception(
+                period, minute, player, team, location, outcome)
+            for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+                if p.id == player:
+                    p.inter += 1
+                    if outcome:
+                        p.interS += 1
+                    else:
+                        p.interF += 1
+                    p.events.append(new_event)
+                    break
 
-            elif event_type == 30:  # PASS
-                specific = event['pass']
-                if 'outcome' in specific:
-                    outcome = False  # FAILED
-                else:
-                    outcome = True  # SUCCESS
-                destination = specific['end_location']
-                assist = False
-                if 'goal_assist' in specific:
-                    assist = True
-                new_event = Pass(period, minute, player, team,
-                                 location, outcome, destination, assist)
-                for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
-                    if p.id == player:
-                        p.pas += 1
-                        if outcome:
-                            p.pasS += 1
-                        else:
-                            p.pasF += 1
-                        p.events.append(new_event)
-                        break
+        elif event_type == 30:  # PASS
+            specific = event['pass']
+            if 'outcome' in specific:
+                outcome = False  # FAILED
+            else:
+                outcome = True  # SUCCESS
+            destination = specific['end_location']
+            assist = False
+            if 'goal_assist' in specific:
+                assist = True
+            new_event = Pass(period, minute, player, team,
+                             location, outcome, destination, assist)
+            for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+                if p.id == player:
+                    p.pas += 1
+                    if outcome:
+                        p.pasS += 1
+                    else:
+                        p.pasF += 1
+                    p.events.append(new_event)
+                    break
 
-            elif event_type == 16:  # SHOT
-                outcome = event['shot']['outcome']['id']
-                goal = False
-                if outcome == 97 or outcome == 100:  # GOAL OR SAVED
-                    if outcome == 97:
-                        goal = True
-                    outcome = True  # ON TARGET
-                else:
-                    outcome = False  # OFF TARGET
-                destination = event['shot']['end_location']
-                new_event = Shot(period, minute, player, team,
-                                 location, outcome, destination, goal)
-                for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
-                    if p.id == player:
-                        p.shot += 1
-                        if outcome:
-                            p.shotS += 1
-                        else:
-                            p.shotF += 1
-                        p.events.append(new_event)
-                        break
+        elif event_type == 16:  # SHOT
+            outcome = event['shot']['outcome']['id']
+            goal = False
+            if outcome == 97 or outcome == 100:  # GOAL OR SAVED
+                if outcome == 97:
+                    goal = True
+                outcome = True  # ON TARGET
+            else:
+                outcome = False  # OFF TARGET
+            destination = event['shot']['end_location']
+            new_event = Shot(period, minute, player, team,
+                             location, outcome, destination, goal)
+            for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+                if p.id == player:
+                    p.shot += 1
+                    if outcome:
+                        p.shotS += 1
+                    else:
+                        p.shotF += 1
+                    p.events.append(new_event)
+                    break
 
-            elif event_type == 19:  # SUBSTITUTION
-                player = event['substitution']['replacement']
-                replaced = event['player']['id']
-                new_player = Player(
-                    player['id'], player['name'], team, None, None)
-                skip = False
-                for p in match_events.teams[0].starters+match_events.teams[0].subs:
+        elif event_type == 19:  # SUBSTITUTION
+            player = event['substitution']['replacement']
+            replaced = event['player']['id']
+            new_player = Player(
+                player['id'], player['name'], team, None, None)
+            skip = False
+            for p in match_events.teams[0].starters+match_events.teams[0].subs:
+                if p.id == replaced:
+                    match_events.teams[0].subs.append(new_player)
+                    skip = True
+                    break
+            if not skip:
+                for p in match_events.teams[1].starters+match_events.teams[1].subs:
                     if p.id == replaced:
-                        match_events.teams[0].subs.append(new_player)
-                        skip = True
+                        match_events.teams[1].subs.append(new_player)
                         break
-                if not skip:
-                    for p in match_events.teams[1].starters+match_events.teams[1].subs:
-                        if p.id == replaced:
-                            match_events.teams[1].subs.append(new_player)
-                            break
+
     return match_events
+
+
+# def parseEvents(file):
+#     with open(file, encoding="utf8") as f:
+#         data = json.load(f)
+#         match_events = MatchEvents()
+#         for d in data[:2]:
+#             for p in d['tactics']['lineup']:
+#                 team_id = d['team']['id']
+#                 new_player = Player(p['player']['id'], p['player']
+#                                     ['name'], team_id, "".join([w[0] for w in p['position']['name'].split(" ")]),  p['jersey_number'])
+#                 if not team_id in [t.id for t in match_events.teams]:
+#                     match_events.teams.append(Team(team_id, d['team']['name']))
+#                 for t in match_events.teams:
+#                     if t.id == team_id:
+#                         t.starters.append(new_player)
+#         for event in data[2:]:
+
+#             period = event["period"]  # PERIOD OF THE GAME (1/2 HALF)
+#             if period > 2:
+#                 break  # NO SUPPORT FOR EXTRA TIME/PENALTIES
+#             minute = event["minute"]  # MINUTE OF THE MATCH
+
+#             if period == 1 and minute > 45:
+#                 # ADDITIONAL TIME (1ST HALF) COUNTED AS 45TH MINUTE
+#                 minute = 45
+#             elif period == 2 and minute > 90:
+#                 # ADDITIONAL TIME (2ND HALF) COUNTED AS 90TH MINUTE
+#                 minute = 90
+
+#             event_type = event["type"]["id"]  # EVENT TYPE
+#             if event_type not in [14, 4, 21, 10, 30, 16, 19]:
+#                 # IGNORE UNSUPPORTED EVENTS (PREVENTS ISSUES WITH FOLLOWING FIELDS NOT BEING PRESENT)
+#                 continue
+
+#             player = event["player"]["id"]  # PLAYER ID
+#             team = event["team"]["id"]  # TEAM ID
+#             if event_type != 19:
+#                 location = event["location"]  # LOCATION [X,Y]
+#             if event_type == 14:  # DRIBBLE
+#                 outcome = event["dribble"]["outcome"]["id"]
+#                 # IF DRIBBLE COMPLETE (ID 8) OR INCOMPLETE (ID 9)
+#                 if outcome == 8:
+#                     outcome = True  # COMPLETE
+#                 else:
+#                     outcome = False  # INCOMPLETE
+#                 new_event = Dribble(period, minute, player,
+#                                     team, location, outcome)
+#                 for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+#                     if p.id == player:
+#                         p.dribble += 1
+#                         if outcome:
+#                             p.dribbleS += 1
+#                         else:
+#                             p.dribbleF += 1
+#                         p.events.append(new_event)
+#                         break
+
+#             elif event_type == 4 or event_type == 21:  # DUEL OR FOUL COMMITED
+#                 if event_type == 4:
+#                     # ID 11 = TACKLE, NO SUPPORT FOR AERIAL DUELS
+#                     if event["duel"]["type"]["id"] == 11:
+#                         outcome = event["duel"]["outcome"]["name"]
+#                         if "Lost" in outcome:
+#                             outcome = False  # FAILED
+#                         else:
+#                             outcome = True  # SUCCESS
+#                 if event_type == 21:
+#                     outcome = False  # FOUL = FAILED
+#                 new_event = Tackle(period, minute, player,
+#                                    team, location, outcome)
+#                 for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+#                     if p.id == player:
+#                         p.tackle += 1
+#                         if outcome:
+#                             p.tackleS += 1
+#                         else:
+#                             p.tackleF += 1
+#                         p.events.append(new_event)
+#                         break
+
+#             elif event_type == 10:  # INTERCEPTION
+#                 outcome = event['interception']['outcome']['name']
+#                 if "Lost" in outcome:
+#                     outcome = False  # FAILED
+#                 else:
+#                     outcome = True  # SUCCESS
+#                 new_event = Interception(
+#                     period, minute, player, team, location, outcome)
+#                 for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+#                     if p.id == player:
+#                         p.inter += 1
+#                         if outcome:
+#                             p.interS += 1
+#                         else:
+#                             p.interF += 1
+#                         p.events.append(new_event)
+#                         break
+
+#             elif event_type == 30:  # PASS
+#                 specific = event['pass']
+#                 if 'outcome' in specific:
+#                     outcome = False  # FAILED
+#                 else:
+#                     outcome = True  # SUCCESS
+#                 destination = specific['end_location']
+#                 assist = False
+#                 if 'goal_assist' in specific:
+#                     assist = True
+#                 new_event = Pass(period, minute, player, team,
+#                                  location, outcome, destination, assist)
+#                 for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+#                     if p.id == player:
+#                         p.pas += 1
+#                         if outcome:
+#                             p.pasS += 1
+#                         else:
+#                             p.pasF += 1
+#                         p.events.append(new_event)
+#                         break
+
+#             elif event_type == 16:  # SHOT
+#                 outcome = event['shot']['outcome']['id']
+#                 goal = False
+#                 if outcome == 97 or outcome == 100:  # GOAL OR SAVED
+#                     if outcome == 97:
+#                         goal = True
+#                     outcome = True  # ON TARGET
+#                 else:
+#                     outcome = False  # OFF TARGET
+#                 destination = event['shot']['end_location']
+#                 new_event = Shot(period, minute, player, team,
+#                                  location, outcome, destination, goal)
+#                 for p in match_events.teams[0].starters+match_events.teams[0].subs+match_events.teams[1].starters+match_events.teams[1].subs:
+#                     if p.id == player:
+#                         p.shot += 1
+#                         if outcome:
+#                             p.shotS += 1
+#                         else:
+#                             p.shotF += 1
+#                         p.events.append(new_event)
+#                         break
+
+#             elif event_type == 19:  # SUBSTITUTION
+#                 player = event['substitution']['replacement']
+#                 replaced = event['player']['id']
+#                 new_player = Player(
+#                     player['id'], player['name'], team, None, None)
+#                 skip = False
+#                 for p in match_events.teams[0].starters+match_events.teams[0].subs:
+#                     if p.id == replaced:
+#                         match_events.teams[0].subs.append(new_player)
+#                         skip = True
+#                         break
+#                 if not skip:
+#                     for p in match_events.teams[1].starters+match_events.teams[1].subs:
+#                         if p.id == replaced:
+#                             match_events.teams[1].subs.append(new_player)
+#                             break
+#     return match_events
