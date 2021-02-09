@@ -1,1 +1,1 @@
-web: gunicorn football_events_grapher.wsgi --log-file -
+web: python manage.py runserver
