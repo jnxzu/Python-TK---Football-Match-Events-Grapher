@@ -1,0 +1,7 @@
+.gitattributes
+*.scss
+*.map
+*.json
+.vscode
+__pycache__
+.env
