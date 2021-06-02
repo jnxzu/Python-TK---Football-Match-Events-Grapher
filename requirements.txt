@@ -19,7 +19,7 @@ requests==2.25.1
 setuptools==50.3.0
 six==1.15.0
 sqlparse==0.4.1
-urllib3==1.26.4
+urllib3==1.26.5
 wheel==0.35.1
 whitenoise==5.2.0
 win-inet-pton==1.1.0
