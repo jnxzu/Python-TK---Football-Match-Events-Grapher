@@ -16,7 +16,7 @@ PySocks==1.7.1
 python-dotenv==0.15.0
 pytz==2020.1
 requests==2.25.1
-setuptools==50.3.0
+setuptools==65.5.1
 six==1.15.0
 sqlparse==0.4.1
 urllib3==1.26.5
